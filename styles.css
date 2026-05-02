@@ -673,6 +673,8 @@ em { font-style: italic; color: var(--fg); }
   .hobby-art { height: 160px; }
 }
 
+.cat-art { font-size: 72px; line-height: 1; }
+
 .hobby-art {
   height: 180px;
   background: var(--bg-3);
