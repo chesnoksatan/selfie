@@ -23,14 +23,15 @@
 <script type="text/babel" src="sections.jsx"></script>
 
 <script type="text/babel">
+const DEV_MODE = new URLSearchParams(location.search).has('dev');
+
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "theme": "dark",
   "accent": "#6aa9ff",
   "fontPair": "mono+sans",
   "density": "airy",
   "cardStyle": "soft",
-  "anim": true,
-  "lasagnaArt": "plate"
+  "anim": true
 }/*EDITMODE-END*/;
 
 const ACCENT_PRESETS = [
@@ -72,61 +73,53 @@ function App() {
       <ExperienceSection />
       <ProjectsSection />
       <StackSection />
-      <HobbySection lasagnaArt={t.lasagnaArt} />
+      <HobbySection lasagnaArt="plate" />
       <ContactsSection />
       <Footer />
 
-      <TweaksPanel title="Tweaks">
-        <TweakSection label="Тема" />
-        <TweakRadio label="Цветовая схема" value={t.theme}
-                    options={[{value:'dark',label:'тёмная'},{value:'light',label:'светлая'}]}
-                    onChange={(v) => setTweak('theme', v)} />
-        <TweakColor label="Акцент" value={t.accent}
-                    onChange={(v) => setTweak('accent', v)} />
-        <TweakSelect label="Палитра" value={t.accent}
-                     options={ACCENT_PRESETS}
-                     onChange={(v) => setTweak('accent', v)} />
+      {DEV_MODE && (
+        <TweaksPanel title="Tweaks">
+          <TweakSection label="Тема" />
+          <TweakRadio label="Цветовая схема" value={t.theme}
+                      options={[{value:'dark',label:'тёмная'},{value:'light',label:'светлая'}]}
+                      onChange={(v) => setTweak('theme', v)} />
+          <TweakColor label="Акцент" value={t.accent}
+                      onChange={(v) => setTweak('accent', v)} />
+          <TweakSelect label="Палитра" value={t.accent}
+                       options={ACCENT_PRESETS}
+                       onChange={(v) => setTweak('accent', v)} />
 
-        <TweakSection label="Типографика" />
-        <TweakSelect label="Шрифты" value={t.fontPair}
-                     options={[
-                       {value:'mono+sans', label:'Mono + Sans (Inter)'},
-                       {value:'serif+sans', label:'Mono + Serif (Fraunces)'},
-                       {value:'sans-only', label:'Только Sans'},
-                       {value:'mono-only', label:'Только Mono'},
-                     ]}
-                     onChange={(v) => setTweak('fontPair', v)} />
+          <TweakSection label="Типографика" />
+          <TweakSelect label="Шрифты" value={t.fontPair}
+                       options={[
+                         {value:'mono+sans', label:'Mono + Sans (Inter)'},
+                         {value:'serif+sans', label:'Mono + Serif (Fraunces)'},
+                         {value:'sans-only', label:'Только Sans'},
+                         {value:'mono-only', label:'Только Mono'},
+                       ]}
+                       onChange={(v) => setTweak('fontPair', v)} />
 
-        <TweakSection label="Раскладка" />
-        <TweakRadio label="Плотность" value={t.density}
-                    options={[
-                      {value:'compact', label:'плотно'},
-                      {value:'cozy', label:'обычно'},
-                      {value:'airy', label:'воздушно'},
-                    ]}
-                    onChange={(v) => setTweak('density', v)} />
-        <TweakRadio label="Карточки" value={t.cardStyle}
-                    options={[
-                      {value:'sharp', label:'острые'},
-                      {value:'soft', label:'мягкие'},
-                      {value:'round', label:'круглые'},
-                    ]}
-                    onChange={(v) => setTweak('cardStyle', v)} />
+          <TweakSection label="Раскладка" />
+          <TweakRadio label="Плотность" value={t.density}
+                      options={[
+                        {value:'compact', label:'плотно'},
+                        {value:'cozy', label:'обычно'},
+                        {value:'airy', label:'воздушно'},
+                      ]}
+                      onChange={(v) => setTweak('density', v)} />
+          <TweakRadio label="Карточки" value={t.cardStyle}
+                      options={[
+                        {value:'sharp', label:'острые'},
+                        {value:'soft', label:'мягкие'},
+                        {value:'round', label:'круглые'},
+                      ]}
+                      onChange={(v) => setTweak('cardStyle', v)} />
 
-        <TweakSection label="Поведение" />
-        <TweakToggle label="Анимации" value={t.anim}
-                     onChange={(v) => setTweak('anim', v)} />
-
-        <TweakSection label="Лазанья" />
-        <TweakSelect label="Иллюстрация" value={t.lasagnaArt}
-                     options={[
-                       {value:'topdown', label:'вид сверху (тарелка)'},
-                       {value:'plate', label:'кусок на тарелке'},
-                       {value:'ascii', label:'ASCII-арт'},
-                       {value:'layered', label:'слои сбоку (старый)'},
-                     ]}
-                     onChange={(v) => setTweak('lasagnaArt', v)} />
-      </TweaksPanel>
+          <TweakSection label="Поведение" />
+          <TweakToggle label="Анимации" value={t.anim}
+                       onChange={(v) => setTweak('anim', v)} />
+        </TweaksPanel>
+      )}
     </>
   );
 }

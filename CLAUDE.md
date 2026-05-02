@@ -27,20 +27,26 @@ When making UI/UX decisions, think like a designer too: visual hierarchy, spacin
 
 ## Running the project
 
-Open `Визитка.html` directly in a browser — no build step, no server required. The page uses Babel Standalone for in-browser JSX transpilation, so changes to `.jsx` files take effect on reload.
+Serve the project with a local HTTP server — opening `index.html` via `file://` won't work because Babel Standalone loads `.jsx` files via `fetch()`, which browsers block on the `file://` protocol.
+
+```
+python3 -m http.server 8000
+```
+
+Then open `http://localhost:8000`. Changes to `.jsx` files take effect on reload.
 
 ## Architecture
 
 Three files, no dependencies to install:
 
-- **`Визитка.html`** — entry point. Loads React 18 + Babel from unpkg CDN with SRI hashes, then loads `tweaks-panel.jsx` and `sections.jsx` as `type="text/babel"` scripts. Contains the `App` component, `TWEAK_DEFAULTS`, and the `ReactDOM.createRoot` call.
-- **`sections.jsx`** — all page sections (Hero, About, Experience, Projects, Stack, Hobby, Contacts, Footer) plus the `useReveal` scroll-animation hook. Exports everything to `window` via `Object.assign(window, …)` so the inline script in `Визитка.html` can reference them.
+- **`index.html`** — entry point. Loads React 18 + Babel from unpkg CDN with SRI hashes, then loads `tweaks-panel.jsx` and `sections.jsx` as `type="text/babel"` scripts. Contains the `App` component, `TWEAK_DEFAULTS`, and the `ReactDOM.createRoot` call.
+- **`sections.jsx`** — all page sections (Hero, About, Experience, Projects, Stack, Hobby, Contacts, Footer) plus the `useReveal` scroll-animation hook. Exports everything to `window` via `Object.assign(window, …)` so the inline script in `index.html` can reference them.
 - **`tweaks-panel.jsx`** — self-contained "Tweaks" floating panel with form controls (`TweakSlider`, `TweakToggle`, `TweakRadio`, `TweakSelect`, `TweakText`, `TweakNumber`, `TweakColor`, `TweakButton`). Exports `useTweaks` hook and all components to `window`.
 - **`styles.css`** — all styles. Theming is entirely via CSS custom properties (`--bg`, `--fg`, `--ac`, `--radius`, `--pad`, `--gap`) driven by `data-*` attributes set on `<html>`: `data-theme`, `data-font`, `data-density`, `data-radius`, `data-anim`.
 
 ## Key patterns
 
-**Tweaks state flow:** `TWEAK_DEFAULTS` in `Визитка.html` (wrapped in `/*EDITMODE-BEGIN*/…/*EDITMODE-END*/` markers) is the single source of truth. `useTweaks(defaults)` manages state in React; every `setTweak` call also posts `{ type: '__edit_mode_set_keys', edits }` to `window.parent` so a host frame can rewrite the `EDITMODE` block on disk.
+**Tweaks state flow:** `TWEAK_DEFAULTS` in `index.html` (wrapped in `/*EDITMODE-BEGIN*/…/*EDITMODE-END*/` markers) is the single source of truth. `useTweaks(defaults)` manages state in React; every `setTweak` call also posts `{ type: '__edit_mode_set_keys', edits }` to `window.parent` so a host frame can rewrite the `EDITMODE` block on disk.
 
 **TweaksPanel postMessage protocol:** the panel listens for `__activate_edit_mode` / `__deactivate_edit_mode` from the parent frame and posts `__edit_mode_available` on mount and `__edit_mode_dismissed` on close. This lets the panel be driven by an external prototype tool without any direct coupling.
 
