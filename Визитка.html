@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Евгений Чесноков — C++/Qt разработчик</title>
+<meta name="description" content="Senior C++/Qt разработчик из Санкт-Петербурга. Специализируюсь на QML и UI/UX. Контрибьютор KDE." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css">
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="sections.jsx"></script>
+
+<script type="text/babel">
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "theme": "dark",
+  "accent": "#6aa9ff",
+  "fontPair": "mono+sans",
+  "density": "airy",
+  "cardStyle": "soft",
+  "anim": true,
+  "lasagnaArt": "plate"
+}/*EDITMODE-END*/;
+
+const ACCENT_PRESETS = [
+  { value: '#6aa9ff', label: 'KDE blue' },
+  { value: '#ff7a59', label: 'terracotta' },
+  { value: '#7fd4a8', label: 'mint' },
+  { value: '#d8b86a', label: 'amber' },
+  { value: '#c792ea', label: 'lilac' },
+];
+
+function App() {
+  const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+  // map fontPair → data-font
+  const fontMap = {
+    'mono+sans': 'sans',     // default: sans for body, mono via .mono class
+    'sans-only': 'sans',
+    'serif+sans': 'serif',
+    'mono-only': 'mono',
+  };
+
+  React.useEffect(() => {
+    const html = document.documentElement;
+    html.setAttribute('data-theme', t.theme);
+    html.setAttribute('data-font', fontMap[t.fontPair] || 'sans');
+    html.setAttribute('data-density', t.density);
+    html.setAttribute('data-radius', t.cardStyle);
+    html.setAttribute('data-anim', t.anim ? 'on' : 'off');
+    html.style.setProperty('--ac', t.accent);
+    html.style.setProperty('--ac-soft', `color-mix(in oklab, ${t.accent} 15%, transparent)`);
+  }, [t]);
+
+  useReveal(t.anim);
+
+  return (
+    <>
+      <HeroSection t={t} anim={t.anim} />
+      <AboutSection />
+      <ExperienceSection />
+      <ProjectsSection />
+      <StackSection />
+      <HobbySection lasagnaArt={t.lasagnaArt} />
+      <ContactsSection />
+      <Footer />
+
+      <TweaksPanel title="Tweaks">
+        <TweakSection label="Тема" />
+        <TweakRadio label="Цветовая схема" value={t.theme}
+                    options={[{value:'dark',label:'тёмная'},{value:'light',label:'светлая'}]}
+                    onChange={(v) => setTweak('theme', v)} />
+        <TweakColor label="Акцент" value={t.accent}
+                    onChange={(v) => setTweak('accent', v)} />
+        <TweakSelect label="Палитра" value={t.accent}
+                     options={ACCENT_PRESETS}
+                     onChange={(v) => setTweak('accent', v)} />
+
+        <TweakSection label="Типографика" />
+        <TweakSelect label="Шрифты" value={t.fontPair}
+                     options={[
+                       {value:'mono+sans', label:'Mono + Sans (Inter)'},
+                       {value:'serif+sans', label:'Mono + Serif (Fraunces)'},
+                       {value:'sans-only', label:'Только Sans'},
+                       {value:'mono-only', label:'Только Mono'},
+                     ]}
+                     onChange={(v) => setTweak('fontPair', v)} />
+
+        <TweakSection label="Раскладка" />
+        <TweakRadio label="Плотность" value={t.density}
+                    options={[
+                      {value:'compact', label:'плотно'},
+                      {value:'cozy', label:'обычно'},
+                      {value:'airy', label:'воздушно'},
+                    ]}
+                    onChange={(v) => setTweak('density', v)} />
+        <TweakRadio label="Карточки" value={t.cardStyle}
+                    options={[
+                      {value:'sharp', label:'острые'},
+                      {value:'soft', label:'мягкие'},
+                      {value:'round', label:'круглые'},
+                    ]}
+                    onChange={(v) => setTweak('cardStyle', v)} />
+
+        <TweakSection label="Поведение" />
+        <TweakToggle label="Анимации" value={t.anim}
+                     onChange={(v) => setTweak('anim', v)} />
+
+        <TweakSection label="Лазанья" />
+        <TweakSelect label="Иллюстрация" value={t.lasagnaArt}
+                     options={[
+                       {value:'topdown', label:'вид сверху (тарелка)'},
+                       {value:'plate', label:'кусок на тарелке'},
+                       {value:'ascii', label:'ASCII-арт'},
+                       {value:'layered', label:'слои сбоку (старый)'},
+                     ]}
+                     onChange={(v) => setTweak('lasagnaArt', v)} />
+      </TweaksPanel>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
