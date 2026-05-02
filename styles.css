@@ -95,6 +95,34 @@ em { font-style: italic; color: var(--fg); }
   transition: none !important;
 }
 
+/* ─── WIP Banner ──────────────────────────────────────── */
+.wip-banner {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: color-mix(in oklab, #e05252 12%, var(--bg));
+  border-bottom: 1px solid color-mix(in oklab, #e05252 25%, transparent);
+  font-size: 0.8rem;
+  color: color-mix(in oklab, var(--fg) 70%, transparent);
+}
+.wip-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #e05252;
+  flex-shrink: 0;
+  animation: wip-pulse 2.4s ease-in-out infinite;
+}
+@keyframes wip-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
 /* ─── Hero ────────────────────────────────────────────── */
 .hero {
   max-width: var(--maxw);

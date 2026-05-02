@@ -2,6 +2,16 @@
 
 const { useState, useEffect, useRef } = React;
 
+// ─── WIP Banner ───────────────────────────────────────────────────
+function WipBanner() {
+  return (
+    <div className="wip-banner">
+      <span className="wip-dot" aria-hidden />
+      <span className="mono">// сайт в разработке — что-то ещё дорабатывается</span>
+    </div>
+  );
+}
+
 // ─── Hero с имитацией IDE ──────────────────────────────────────────
 function HeroSection({ t, anim }) {
   const [typed, setTyped] = useState('');
@@ -524,6 +534,6 @@ function useReveal(enabled) {
 }
 
 Object.assign(window, {
-  HeroSection, AboutSection, ExperienceSection, ProjectsSection,
+  WipBanner, HeroSection, AboutSection, ExperienceSection, ProjectsSection,
   StackSection, HobbySection, ContactsSection, Footer, useReveal,
 });
