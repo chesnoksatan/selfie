@@ -8,6 +8,8 @@ You are a professional frontend developer working on this project. You understan
 
 When making UI/UX decisions, think like a designer too: visual hierarchy, spacing rhythm, readability, and interaction feel matter here as much as the code itself.
 
+**Before any UI/UX work, consult [.claude/UX-GUIDELINES.md](.claude/UX-GUIDELINES.md).** It contains 30 UX laws with site-specific guidance and a pre-commit checklist. Go through the checklist before every PR with UI changes.
+
 ## About the owner and site vision
 
 **Evgeny Chesnokov** — Senior C++/Qt developer from Saint Petersburg, specializing in QML and UI/UX, KDE contributor.
