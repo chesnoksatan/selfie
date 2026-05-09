@@ -24,9 +24,7 @@
 .DS_Store
 *.pem
 
-# ssh keys accidentally placed in repo root
-/github
-/github.pub
+# ssh keys
 /id_*
 /*.key
 
@@ -45,3 +43,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# claude code local state
+/.claude/
