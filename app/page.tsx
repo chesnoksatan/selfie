@@ -1,13 +1,27 @@
+import { WipBanner } from "@/components/WipBanner";
+import { HeroSection } from "@/components/sections/Hero";
+import { AboutSection } from "@/components/sections/About";
+import { ExperienceSection } from "@/components/sections/Experience";
+import { ProjectsSection } from "@/components/sections/Projects";
+import { StackSection } from "@/components/sections/Stack";
+import { HobbySection } from "@/components/sections/Hobby";
+import { ContactsSection } from "@/components/sections/Contacts";
+import { Footer } from "@/components/sections/Footer";
+import { RevealRoot } from "@/lib/reveal";
+
 export default function Home() {
   return (
-    <main style={{ padding: "96px 32px", maxWidth: 760, margin: "0 auto" }}>
-      <h1 className="mono" style={{ fontSize: "clamp(40px, 5.5vw, 68px)" }}>
-        Renovation in progress
-        <span className="ac">.</span>
-      </h1>
-      <p className="dim small">
-        Глобальные стили и темы перенесены. Секции портируются в фазе 3.
-      </p>
-    </main>
+    <>
+      <WipBanner />
+      <HeroSection />
+      <AboutSection />
+      <ExperienceSection />
+      <ProjectsSection />
+      <StackSection />
+      <HobbySection />
+      <ContactsSection />
+      <Footer />
+      <RevealRoot />
+    </>
   );
 }

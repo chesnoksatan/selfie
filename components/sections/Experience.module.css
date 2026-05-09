@@ -1,0 +1,132 @@
+.timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.job {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 24px;
+}
+
+.spine {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 8px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1.5px solid var(--fg-3);
+  flex-shrink: 0;
+}
+
+.dotCurrent {
+  background: var(--ac);
+  border-color: var(--ac);
+  box-shadow: 0 0 0 4px var(--ac-soft);
+}
+
+.line {
+  flex: 1;
+  width: 1px;
+  background: var(--line-2);
+  margin: 8px 0 -16px;
+}
+
+.body {
+  padding: 0 0 48px;
+  border-bottom: 0.5px solid var(--line);
+  margin-bottom: 0;
+}
+
+.job:last-child .body {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.co {
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0 0 4px;
+  letter-spacing: -0.01em;
+}
+
+.role {
+  color: var(--fg-2);
+  font-size: 15px;
+}
+
+.note {
+  color: var(--fg-3);
+  margin-left: 4px;
+  font-size: 14px;
+}
+
+.period {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--fg-3);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.ping {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ac);
+  box-shadow: 0 0 0 0 var(--ac-soft);
+  animation: pulse 2.4s infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ping {
+    animation: none;
+  }
+}
+
+.text {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--fg);
+  margin: 0 0 14px;
+  text-wrap: pretty;
+}
+
+.bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.bullets li {
+  display: flex;
+  gap: 10px;
+  font-size: 14.5px;
+  color: var(--fg-2);
+}
+.tick {
+  color: var(--ac);
+  flex-shrink: 0;
+  font-family: var(--mono);
+}
