@@ -1,18 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
+import { useTheme } from "@/lib/theme";
 import styles from "./ThemeToggle.module.css";
 
 export function ThemeToggle() {
-  const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
-
-  // Render a placeholder of the same size to avoid layout shift before
-  // hydration; the icon resolves once we know the theme client-side.
-  const isDark = mounted ? resolvedTheme === "dark" : true;
+  const { theme, setTheme, mounted } = useTheme();
+  const isDark = theme === "dark";
 
   return (
     <button

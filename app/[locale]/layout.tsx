@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Inter, JetBrains_Mono, Fraunces } from "next/font/google";
-import { ThemeProvider } from "@/components/ThemeProvider";
 import { locales, isLocale, type Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/dictionaries";
+import { themeBootScript } from "@/lib/theme";
 import "../globals.css";
 
 const inter = Inter({
@@ -60,16 +60,10 @@ export default async function LocaleLayout({
       suppressHydrationWarning
       className={`${inter.variable} ${jetbrainsMono.variable} ${fraunces.variable}`}
     >
-      <body>
-        <ThemeProvider
-          attribute="data-theme"
-          defaultTheme="dark"
-          enableSystem={false}
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
-      </body>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
+      </head>
+      <body>{children}</body>
     </html>
   );
 }
