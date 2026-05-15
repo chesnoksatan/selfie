@@ -1,0 +1,50 @@
+.toggle {
+  position: fixed;
+  top: 56px;
+  right: 24px;
+  z-index: 90;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--bg-2) 80%, transparent);
+  border: 0.5px solid var(--line-2);
+  color: var(--fg-2);
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition:
+    color 0.2s,
+    border-color 0.2s,
+    transform 0.2s;
+}
+
+.toggle:hover {
+  color: var(--ac);
+  border-color: var(--ac);
+  transform: translateY(-1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toggle {
+    transition: none;
+  }
+  .toggle:hover {
+    transform: none;
+  }
+}
+
+.toggle svg {
+  width: 18px;
+  height: 18px;
+}
+
+@media (max-width: 480px) {
+  .toggle {
+    top: 48px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+  }
+}

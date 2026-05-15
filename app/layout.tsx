@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono, Fraunces } from "next/font/google";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
 
 const inter = Inter({
@@ -35,10 +36,19 @@ export default function RootLayout({
   return (
     <html
       lang="ru"
-      data-theme="dark"
+      suppressHydrationWarning
       className={`${inter.variable} ${jetbrainsMono.variable} ${fraunces.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        <ThemeProvider
+          attribute="data-theme"
+          defaultTheme="dark"
+          enableSystem={false}
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

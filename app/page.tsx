@@ -1,4 +1,5 @@
 import { WipBanner } from "@/components/WipBanner";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { HeroSection } from "@/components/sections/Hero";
 import { AboutSection } from "@/components/sections/About";
 import { ExperienceSection } from "@/components/sections/Experience";
@@ -13,6 +14,7 @@ export default function Home() {
   return (
     <>
       <WipBanner />
+      <ThemeToggle />
       <HeroSection />
       <AboutSection />
       <ExperienceSection />
