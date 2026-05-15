@@ -9,5 +9,94 @@
   },
   "localeSwitcher": {
     "label": "Change language"
+  },
+  "wip": "// site under construction — still polishing things",
+  "hero": {
+    "eyebrow": "now in Saint Petersburg · feel free to write",
+    "greeting": "Hi, I'm",
+    "name": "Evgeny",
+    "sub": "Six years writing desktop interfaces in C++ and Qt — and I'm still not tired of it. These days I build system utilities for a Russian OS, and a chunk of my work hours goes to KDE. Yes, open source on company time — I still can't quite believe it myself.",
+    "ctaContact": "Get in touch",
+    "ctaProjects": "See projects",
+    "code": "// Developer.qml\nimport QtQuick 2.15\nimport QtQuick.Controls 2.15\n\nApplicationWindow {\n    id: developer\n    title: \"Evgeny Chesnokov\"\n    visible: true\n\n    readonly property string role: \"Senior C++/Qt\"\n    readonly property string city: \"Saint Petersburg\"\n    readonly property int    years: 6\n    readonly property var    loves: [\n        \"QML\", \"UI/UX\", \"KDE\",\n        \"lasagna\", \"postcards\"\n    ]\n\n    Component.onCompleted: {\n        console.log(\"Hello 👋\")\n    }\n}",
+    "outHello": "Hello 👋",
+    "outReady": "ready in 0.42s"
+  },
+  "about": {
+    "rail": "about me",
+    "head": {
+      "pre": "I'm ",
+      "ac": "Evgeny Chesnokov",
+      "post": ", based in Saint Petersburg."
+    },
+    "p1": "I first met programming at university, but it didn't click right away. In my third year I did an internship at RNIIRS — started by poking at kernel modules, then made my way to Qt. A year later my mentor from that same internship invited me onto his team to build QML interfaces. That's how it all began, in April 2019.",
+    "p2": "Qt wasn't an ideological pick — more like a happy coincidence. I honestly tried other things: took a Python course, dug into Dart + Flutter (even passed a couple of mid-level interviews), peeked at JS — it feels familiar because it shows up so much in QML. But there are so many JS frameworks that I never figured out where to start, and I happily stayed with Qt. No regrets.",
+    "p3": "What I love most about the work is <em>UI/UX and the way people interact with software</em>. It matters to me that a program isn't just functional but actually pleasant — that the person opening it feels everything is in its right place."
+  },
+  "experience": {
+    "rail": "experience",
+    "head": {
+      "pre": "Three companies. ",
+      "ac": "Over six years.",
+      "post": " One favorite stack."
+    }
+  },
+  "projects": {
+    "rail": "open source",
+    "head": {
+      "pre": "During work hours I regularly ",
+      "ac": "contribute to KDE",
+      "post": "."
+    },
+    "desc": "Most of my open-source work goes through KDE — it's part of my current job. I do have a few small personal projects, but I built them for myself — nothing especially useful to anyone else. So here you'll find KDE and one story that matters to me."
+  },
+  "stack": {
+    "rail": "stack",
+    "head": {
+      "pre": "My ",
+      "ac": "toolkit",
+      "post": "."
+    }
+  },
+  "hobby": {
+    "rail": "off the clock",
+    "head": {
+      "pre": "Outside of work I have ",
+      "ac": "three things that matter",
+      "post": "."
+    },
+    "cards": {
+      "cat": {
+        "tag": "01 / cat",
+        "title": "Leo.",
+        "body": "This is my cat. He moved to Saint Petersburg with me and bravely got through it — now we're both at home here. Leo is convinced my desk is, first and foremost, his workplace, and I don't argue.",
+        "note": "// bosses can be fluffy too"
+      },
+      "cook": {
+        "tag": "02 / cooking",
+        "title": "Lasagna — my signature dish.",
+        "body": "Cooking calms me down. I can spend hours in the kitchen and come out rested rather than tired — my head clears, and there's something to eat at the end. My signature dish is lasagna, and I make it <em>excellently</em>.",
+        "note": "// and I'm convinced of it"
+      },
+      "cards": {
+        "tag": "03 / collection",
+        "title": "Postcards and photographs.",
+        "body": "I collect beautiful postcards from different cities and countries — some I bring back myself, others I ask friends to bring. Bit by bit it adds up to my own personal world map. Recently I've started shooting on a Papershoot and printing photos sometimes — so my own cities are joining the foreign ones.",
+        "note": "// if you're travelling somewhere — drop me a line"
+      }
+    }
+  },
+  "contacts": {
+    "rail": "contacts",
+    "head": {
+      "pre": "I'm not actively job hunting right now, but ",
+      "ac": "I'm always glad to meet",
+      "post": "."
+    },
+    "desc": "Talk about an interesting project, chat about Qt, QML, or good UI — or just say hi. Any reason works."
+  },
+  "footer": {
+    "copy": "© 2026 Evgeny Chesnokov",
+    "tagline": "made with love for Qt"
   }
 }

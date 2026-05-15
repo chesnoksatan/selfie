@@ -1,36 +1,21 @@
-export function AboutSection() {
+import type { Dictionary } from "@/lib/i18n/dictionaries";
+
+export function AboutSection({ dict }: { dict: Dictionary["about"] }) {
   return (
     <section className="section reveal" id="about">
       <div className="section-rail">
         <span className="rail-num">01</span>
-        <span className="rail-label">обо мне</span>
+        <span className="rail-label">{dict.rail}</span>
       </div>
       <div className="narrative-body">
         <h2 className="sec-h">
-          Меня зовут <span className="ac">Евгений Чесноков</span>, живу в
-          Санкт-Петербурге.
+          {dict.head.pre}
+          <span className="ac">{dict.head.ac}</span>
+          {dict.head.post}
         </h2>
-        <p>
-          С программированием я познакомился в универе, но «моим» оно стало не
-          сразу. На третьем курсе я попал на практику в РНИИРС — сначала ковырял
-          модули ядра, потом дошёл до Qt. А ещё через год мой наставник с той же
-          практики позвал меня в свою команду — писать интерфейсы на QML. Так в
-          апреле 2019-го всё и началось.
-        </p>
-        <p>
-          Qt — это не идеологический выбор, а скорее счастливое совпадение. Я
-          честно пробовал и другое: проходил курс по Python, копал Dart +
-          Flutter (даже прошёл пару собеседований на мидла), поглядывал в
-          сторону JS — он мне близок, потому что часто встречается в QML. Но
-          JS-фреймворков столько, что я так и не понял, с какой стороны
-          подступиться, и спокойно остался с Qt. Не жалею.
-        </p>
-        <p>
-          Больше всего в работе я люблю{" "}
-          <em>UI/UX и взаимодействие с пользователем</em>. Мне важно, чтобы
-          программа была не просто рабочей, а удобной — чтобы человек, который
-          её открывает, чувствовал, что всё на своих местах.
-        </p>
+        <p>{dict.p1}</p>
+        <p>{dict.p2}</p>
+        <p dangerouslySetInnerHTML={{ __html: dict.p3 }} />
       </div>
     </section>
   );

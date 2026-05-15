@@ -3,16 +3,19 @@
 import { useTheme } from "@/lib/theme";
 import styles from "./ThemeToggle.module.css";
 
-export function ThemeToggle() {
+type Labels = { toLight: string; toDark: string };
+
+export function ThemeToggle({ labels }: { labels: Labels }) {
   const { theme, setTheme, mounted } = useTheme();
   const isDark = theme === "dark";
+  const label = isDark ? labels.toLight : labels.toDark;
 
   return (
     <button
       type="button"
       className={styles.toggle}
-      aria-label={isDark ? "Включить светлую тему" : "Включить тёмную тему"}
-      title={isDark ? "Светлая тема" : "Тёмная тема"}
+      aria-label={label}
+      title={label}
       onClick={() => setTheme(isDark ? "light" : "dark")}
     >
       {mounted &&

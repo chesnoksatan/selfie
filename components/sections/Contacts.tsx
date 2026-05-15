@@ -1,3 +1,4 @@
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 import styles from "./Contacts.module.css";
 
 const ITEMS = [
@@ -18,22 +19,20 @@ const ITEMS = [
   },
 ];
 
-export function ContactsSection() {
+export function ContactsSection({ dict }: { dict: Dictionary["contacts"] }) {
   return (
     <section className="section reveal" id="contacts">
       <div className="section-rail">
         <span className="rail-num">06</span>
-        <span className="rail-label">контакты</span>
+        <span className="rail-label">{dict.rail}</span>
       </div>
       <div className="narrative-body">
         <h2 className="sec-h">
-          Сейчас я не в активном поиске работы, но{" "}
-          <span className="ac">всегда рад знакомству</span>.
+          {dict.head.pre}
+          <span className="ac">{dict.head.ac}</span>
+          {dict.head.post}
         </h2>
-        <p className="dim">
-          Обсудить интересный проект, поговорить о Qt, QML, хорошем UI — или
-          просто сказать «привет». Любой повод подойдёт.
-        </p>
+        <p className="dim">{dict.desc}</p>
         <div className={styles.list}>
           {ITEMS.map((c, i) => (
             <a
@@ -41,7 +40,7 @@ export function ContactsSection() {
               href={c.href}
               key={i}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
               <span className={`${styles.label} mono`}>{c.label}</span>
               <span className={styles.value}>{c.value}</span>

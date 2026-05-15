@@ -1,26 +1,31 @@
 import { KDE } from "@/content/data/projects";
+import type { Locale } from "@/lib/i18n/config";
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 import styles from "./Projects.module.css";
 
-export function ProjectsSection() {
+export function ProjectsSection({
+  dict,
+  locale,
+}: {
+  dict: Dictionary["projects"];
+  locale: Locale;
+}) {
+  const projects = KDE[locale];
   return (
     <section className="section reveal" id="projects">
       <div className="section-rail">
         <span className="rail-num">03</span>
-        <span className="rail-label">open source</span>
+        <span className="rail-label">{dict.rail}</span>
       </div>
       <div className="narrative-body">
         <h2 className="sec-h">
-          В рабочее время я регулярно{" "}
-          <span className="ac">вношу свой вклад в KDE</span>.
+          {dict.head.pre}
+          <span className="ac">{dict.head.ac}</span>
+          {dict.head.post}
         </h2>
-        <p className="dim">
-          Основная часть моего вклада в сообщество идёт через KDE — это часть
-          моей текущей работы. У меня есть и свои небольшие проекты, но я писал
-          их для себя — ничего такого, что было бы полезно кому-то, кроме меня
-          самого. Поэтому здесь — про KDE и одну важную для меня историю.
-        </p>
+        <p className="dim">{dict.desc}</p>
         <div className={styles.grid}>
-          {KDE.map((k, i) => (
+          {projects.map((k, i) => (
             <a
               className={styles.card}
               key={i}

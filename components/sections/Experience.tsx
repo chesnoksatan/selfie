@@ -1,26 +1,36 @@
 import { JOBS } from "@/content/data/experience";
+import type { Locale } from "@/lib/i18n/config";
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 import styles from "./Experience.module.css";
 
-export function ExperienceSection() {
+export function ExperienceSection({
+  dict,
+  locale,
+}: {
+  dict: Dictionary["experience"];
+  locale: Locale;
+}) {
+  const jobs = JOBS[locale];
   return (
     <section className="section reveal" id="experience">
       <div className="section-rail">
         <span className="rail-num">02</span>
-        <span className="rail-label">опыт работы</span>
+        <span className="rail-label">{dict.rail}</span>
       </div>
       <div className="narrative-body">
         <h2 className="sec-h">
-          Три компании. <span className="ac">Шесть с лишним лет.</span> Один
-          любимый стек.
+          {dict.head.pre}
+          <span className="ac">{dict.head.ac}</span>
+          {dict.head.post}
         </h2>
         <div className={styles.timeline}>
-          {JOBS.map((j, i) => (
+          {jobs.map((j, i) => (
             <article className={styles.job} key={i}>
               <div className={styles.spine}>
                 <div
                   className={`${styles.dot} ${j.current ? styles.dotCurrent : ""}`}
                 />
-                {i < JOBS.length - 1 && <div className={styles.line} />}
+                {i < jobs.length - 1 && <div className={styles.line} />}
               </div>
               <div className={styles.body}>
                 <div className={styles.head}>

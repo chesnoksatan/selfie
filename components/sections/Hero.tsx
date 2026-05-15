@@ -1,29 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 import styles from "./Hero.module.css";
-
-const FULL_CODE = `// Developer.qml
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-
-ApplicationWindow {
-    id: developer
-    title: "Евгений Чесноков"
-    visible: true
-
-    readonly property string role: "Senior C++/Qt"
-    readonly property string city: "Санкт-Петербург"
-    readonly property int    years: 6
-    readonly property var    loves: [
-        "QML", "UI/UX", "KDE",
-        "лазанью", "открытки"
-    ]
-
-    Component.onCompleted: {
-        console.log("Hello 👋")
-    }
-}`;
 
 function highlight(code: string) {
   const lines = code.split("\n");
@@ -57,10 +36,19 @@ function highlight(code: string) {
 
 function scrollTo(id: string) {
   const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  if (el) {
+    const reduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    el.scrollIntoView({
+      behavior: reduced ? "auto" : "smooth",
+      block: "start",
+    });
+  }
 }
 
-export function HeroSection() {
+export function HeroSection({ dict }: { dict: Dictionary["hero"] }) {
+  const fullCode = dict.code;
   const [typed, setTyped] = useState("");
 
   useEffect(() => {
@@ -68,24 +56,24 @@ export function HeroSection() {
       "(prefers-reduced-motion: reduce)",
     ).matches;
     if (reduced) {
-      setTyped(FULL_CODE);
+      setTyped(fullCode);
       return;
     }
     let i = 0;
     setTyped("");
     const id = setInterval(() => {
       i += 2;
-      if (i >= FULL_CODE.length) {
-        setTyped(FULL_CODE);
+      if (i >= fullCode.length) {
+        setTyped(fullCode);
         clearInterval(id);
       } else {
-        setTyped(FULL_CODE.slice(0, i));
+        setTyped(fullCode.slice(0, i));
       }
     }, 14);
     return () => clearInterval(id);
-  }, []);
+  }, [fullCode]);
 
-  const typing = typed.length < FULL_CODE.length;
+  const typing = typed.length < fullCode.length;
 
   return (
     <section className={`${styles.hero} reveal`} id="top">
@@ -93,33 +81,28 @@ export function HeroSection() {
         <div>
           <div className="eyebrow">
             <span className="dot" />
-            <span>сейчас в Санкт-Петербурге · можно написать</span>
+            <span>{dict.eyebrow}</span>
           </div>
           <h1 className={styles.title}>
-            Привет, я <span className="ac">Евгений</span>
+            {dict.greeting} <span className="ac">{dict.name}</span>
             <span className={styles.wave} aria-hidden>
               👋
             </span>
           </h1>
-          <p className={styles.sub}>
-            Шесть лет пишу десктопные интерфейсы на C++ и Qt — и до сих пор не
-            устал. Сейчас делаю системные утилиты для отечественной ОС, а часть
-            рабочего времени коммичу в KDE. Да, опенсорс прямо на работе — мне
-            самому до сих пор немного не верится.
-          </p>
+          <p className={styles.sub}>{dict.sub}</p>
           <div className={styles.ctaRow}>
             <button
               className="btn btn-primary"
               onClick={() => scrollTo("contacts")}
             >
-              Связаться со мной
+              {dict.ctaContact}
               <span className="arr">→</span>
             </button>
             <button
               className="btn btn-ghost"
               onClick={() => scrollTo("experience")}
             >
-              Посмотреть проекты
+              {dict.ctaProjects}
             </button>
           </div>
         </div>
@@ -163,10 +146,10 @@ export function HeroSection() {
             </div>
             <div className={styles.outputBody}>
               <div>
-                <span className={styles.muted}>qml:</span> Hello 👋
+                <span className={styles.muted}>qml:</span> {dict.outHello}
               </div>
               <div>
-                <span className={styles.muted}>qml:</span> ready in 0.42s
+                <span className={styles.muted}>qml:</span> {dict.outReady}
               </div>
               <div className={styles.caretLine}>
                 <span className={styles.muted}>›</span>
