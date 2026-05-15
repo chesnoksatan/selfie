@@ -1,6 +1,8 @@
 import { WipBanner } from "@/components/WipBanner";
-import { ThemeToggle } from "@/components/ThemeToggle";
-import { LocaleSwitcher } from "@/components/LocaleSwitcher";
+// Theme and locale switchers are intentionally hidden from users for now —
+// kept in the codebase to be reintroduced once content stabilizes.
+// import { ThemeToggle } from "@/components/ThemeToggle";
+// import { LocaleSwitcher } from "@/components/LocaleSwitcher";
 import { HeroSection } from "@/components/sections/Hero";
 import { AboutSection } from "@/components/sections/About";
 import { ExperienceSection } from "@/components/sections/Experience";
@@ -27,8 +29,8 @@ export default async function Home({
   return (
     <>
       <WipBanner text={dict.wip} />
-      <ThemeToggle labels={dict.themeToggle} />
-      <LocaleSwitcher current={typedLocale} label={dict.localeSwitcher.label} />
+      {/* <ThemeToggle labels={dict.themeToggle} /> */}
+      {/* <LocaleSwitcher current={typedLocale} label={dict.localeSwitcher.label} /> */}
       <HeroSection dict={dict.hero} />
       <AboutSection dict={dict.about} />
       <ExperienceSection dict={dict.experience} locale={typedLocale} />
