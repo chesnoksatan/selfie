@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { Inter, JetBrains_Mono, Fraunces } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import "./globals.css";
+import { locales, isLocale, type Locale } from "@/lib/i18n/config";
+import { getDictionary } from "@/lib/i18n/dictionaries";
+import "../globals.css";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -21,21 +24,39 @@ const fraunces = Fraunces({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "Евгений Чесноков — C++/Qt разработчик",
-  description:
-    "Senior C++/Qt разработчик из Санкт-Петербурга. Специализируюсь на QML и UI/UX. Контрибьютор KDE.",
-  icons: { icon: "/favicon.svg" },
-};
+export async function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
 
-export default function RootLayout({
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  if (!isLocale(locale)) return {};
+  const dict = await getDictionary(locale);
+  return {
+    title: dict.meta.title,
+    description: dict.meta.description,
+    icons: { icon: "/favicon.svg" },
+  };
+}
+
+export default async function LocaleLayout({
   children,
-}: Readonly<{
+  params,
+}: {
   children: React.ReactNode;
-}>) {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  if (!isLocale(locale)) notFound();
+  const typedLocale: Locale = locale;
+
   return (
     <html
-      lang="ru"
+      lang={typedLocale}
       suppressHydrationWarning
       className={`${inter.variable} ${jetbrainsMono.variable} ${fraunces.variable}`}
     >

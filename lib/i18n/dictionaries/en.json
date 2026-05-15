@@ -1,0 +1,13 @@
+{
+  "meta": {
+    "title": "Evgeny Chesnokov — C++/Qt developer",
+    "description": "Senior C++/Qt developer from Saint Petersburg. Specializing in QML and UI/UX. KDE contributor."
+  },
+  "themeToggle": {
+    "toLight": "Switch to light theme",
+    "toDark": "Switch to dark theme"
+  },
+  "localeSwitcher": {
+    "label": "Change language"
+  }
+}

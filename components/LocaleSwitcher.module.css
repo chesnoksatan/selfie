@@ -1,0 +1,52 @@
+.switcher {
+  position: fixed;
+  top: 56px;
+  right: 76px;
+  z-index: 90;
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--bg-2) 80%, transparent);
+  border: 0.5px solid var(--line-2);
+  backdrop-filter: blur(8px);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  min-width: 32px;
+  padding: 0 8px;
+  border-radius: 999px;
+  color: var(--fg-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition:
+    color 0.2s,
+    background 0.2s;
+}
+.option:hover {
+  color: var(--fg);
+}
+.optionActive {
+  color: var(--ac);
+  background: var(--ac-soft);
+}
+
+@media (max-width: 480px) {
+  .switcher {
+    top: 48px;
+    right: 60px;
+    height: 36px;
+  }
+  .option {
+    height: 28px;
+    min-width: 28px;
+    padding: 0 6px;
+  }
+}
