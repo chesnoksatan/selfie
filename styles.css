@@ -61,16 +61,6 @@ html, body {
   -webkit-font-smoothing: antialiased;
   font-feature-settings: 'ss01', 'cv11';
 }
-body {
-  background-image:
-    radial-gradient(900px 500px at 80% -10%, var(--ac-soft), transparent 60%),
-    radial-gradient(700px 400px at 0% 30%, color-mix(in oklab, var(--ac) 6%, transparent), transparent 60%);
-  background-attachment: fixed;
-}
-@media (max-width: 960px) {
-  body { background-attachment: scroll; }
-}
-
 ::selection { background: var(--ac); color: #0d0e10; }
 
 a { color: inherit; text-decoration: none; }
@@ -84,17 +74,14 @@ em { font-style: italic; color: var(--fg); }
 /* Reveal-on-scroll */
 .hero, .section {
   opacity: 0;
-  transform: translateY(18px);
-  transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1);
+  transition: opacity .9s cubic-bezier(.2,.7,.2,1);
 }
 .hero.in, .section.in {
   opacity: 1;
-  transform: translateY(0);
 }
 [data-anim="off"] .hero,
 [data-anim="off"] .section {
   opacity: 1 !important;
-  transform: none !important;
   transition: none !important;
 }
 
@@ -148,31 +135,6 @@ em { font-style: italic; color: var(--fg); }
   .ide-body { min-height: 200px; }
 }
 
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--mono);
-  font-size: 12px;
-  color: var(--fg-2);
-  padding: 6px 12px;
-  border: 0.5px solid var(--line-2);
-  border-radius: 999px;
-  background: color-mix(in oklab, var(--bg-2) 60%, transparent);
-  margin-bottom: 28px;
-}
-.eyebrow .dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: #2dd573;
-  box-shadow: 0 0 0 0 rgba(45,213,115,0.6);
-  animation: pulse 2.4s infinite;
-}
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(45,213,115,0.6); }
-  70% { box-shadow: 0 0 0 8px rgba(45,213,115,0); }
-  100% { box-shadow: 0 0 0 0 rgba(45,213,115,0); }
-}
-
 .hero-title {
   font-family: var(--mono);
   font-size: clamp(40px, 5.5vw, 68px);
@@ -181,22 +143,6 @@ em { font-style: italic; color: var(--fg); }
   font-weight: 600;
   margin: 0 0 24px;
 }
-.wave {
-  display: inline-block;
-  margin-left: 12px;
-  transform-origin: 70% 70%;
-  animation: wave 3.4s ease-in-out infinite;
-}
-@keyframes wave {
-  0%, 60%, 100% { transform: rotate(0); }
-  10% { transform: rotate(14deg); }
-  20% { transform: rotate(-8deg); }
-  30% { transform: rotate(14deg); }
-  40% { transform: rotate(-4deg); }
-  50% { transform: rotate(10deg); }
-}
-[data-anim="off"] .wave, [data-anim="off"] .eyebrow .dot { animation: none !important; }
-
 .hero-sub {
   font-size: 19px;
   line-height: 1.55;
@@ -317,7 +263,6 @@ em { font-style: italic; color: var(--fg); }
   gap: 16px;
   padding: 0 18px;
 }
-.code-line:hover { background: color-mix(in oklab, var(--ac) 6%, transparent); }
 .ln {
   color: var(--fg-3);
   user-select: none;
@@ -427,17 +372,9 @@ em { font-style: italic; color: var(--fg); }
   color: var(--fg-3);
   padding-top: 14px;
 }
-.rail-num {
-  font-size: 32px;
-  color: var(--fg-2);
-  font-weight: 500;
-  letter-spacing: -0.04em;
-  line-height: 1;
-}
 .rail-label {
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 11px;
+  font-size: 13px;
+  font-style: italic;
 }
 
 .narrative-body {
@@ -531,12 +468,6 @@ em { font-style: italic; color: var(--fg); }
   align-items: center;
   gap: 8px;
   padding-top: 4px;
-}
-.ping {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: var(--ac);
-  box-shadow: 0 0 0 0 var(--ac-soft);
-  animation: pulse 2.4s infinite;
 }
 .job-text {
   font-size: 16px;
@@ -655,9 +586,7 @@ em { font-style: italic; color: var(--fg); }
   border-radius: var(--radius-sm);
   color: var(--fg);
   white-space: nowrap;
-  transition: border-color .2s, color .2s;
 }
-.chip:hover { border-color: var(--ac); color: var(--ac); }
 
 /* ─── Hobby ────────────────────────────────────────────── */
 .hobby-grid {
@@ -675,11 +604,7 @@ em { font-style: italic; color: var(--fg); }
   border: 0.5px solid var(--line-2);
   border-radius: var(--radius);
   padding: 24px;
-  transition: transform .3s, border-color .3s;
 }
-.hobby-card:hover { transform: translateY(-2px); border-color: var(--fg-3); }
-[data-anim="off"] .hobby-card { transition: none; }
-[data-anim="off"] .hobby-card:hover { transform: none; }
 @media (max-width: 720px) {
   .hobby-card { grid-template-columns: 1fr; }
   .hobby-art { height: 160px; }
@@ -909,7 +834,6 @@ em { font-style: italic; color: var(--fg); }
   box-shadow: 0 6px 20px rgba(0,0,0,0.25);
   display: flex;
   align-items: flex-end;
-  transition: transform .35s;
 }
 .stamp {
   position: absolute;
@@ -922,9 +846,6 @@ em { font-style: italic; color: var(--fg); }
 .p1 { top: 0; left: 0; transform: rotate(-8deg); }
 .p2 { top: 14px; left: 24px; transform: rotate(3deg); background: #efe6cf; }
 .p3 { top: 28px; left: 50px; transform: rotate(-2deg); background: #e8dfc4; }
-.postcards:hover .p1 { transform: rotate(-12deg) translate(-6px, -4px); }
-.postcards:hover .p3 { transform: rotate(2deg) translate(8px, 4px); }
-[data-anim="off"] .postcard { transition: none; }
 
 /* ─── Contacts ─────────────────────────────────────────── */
 .contact-list {
