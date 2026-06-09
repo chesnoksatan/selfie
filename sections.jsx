@@ -62,13 +62,15 @@ ApplicationWindow {
   const highlight = (code) => {
     const lines = code.split('\n');
     return lines.map((line, idx) => {
-      let html = line
-        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-        .replace(/(\/\/.*$)/g, '<span class="cm">$1</span>')
-        .replace(/("[^"]*")/g, '<span class="cs">$1</span>')
-        .replace(/\b(import|readonly|property|var|int|string|Component|onCompleted)\b/g, '<span class="kw">$1</span>')
-        .replace(/\b(ApplicationWindow|console)\b/g, '<span class="ty">$1</span>')
-        .replace(/\b(\d+)\b/g, '<span class="nm">$1</span>');
+      const esc = line.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      // строки-комментарии подсвечиваются целиком, иначе регэксп строк ломает span комментария
+      let html = /^\s*\/\//.test(esc)
+        ? `<span class="cm">${esc}</span>`
+        : esc
+            .replace(/("[^"]*")/g, '<span class="cs">$1</span>')
+            .replace(/\b(import|readonly|property|var|int|string|Component|onCompleted)\b/g, '<span class="kw">$1</span>')
+            .replace(/\b(ApplicationWindow|console)\b/g, '<span class="ty">$1</span>')
+            .replace(/\b(\d+)\b/g, '<span class="nm">$1</span>');
       return (
         <div className="code-line" key={idx}>
           <span className="ln">{String(idx + 1).padStart(2, ' ')}</span>
@@ -82,13 +84,8 @@ ApplicationWindow {
     <section className="hero" id="top">
       <div className="hero-grid">
         <div className="hero-text">
-          <div className="eyebrow">
-            <span className="dot" />
-            <span>сейчас в Санкт-Петербурге · можно написать</span>
-          </div>
           <h1 className="hero-title">
             Привет, я <span className="ac">Евгений</span>
-            <span className="wave" aria-hidden>👋</span>
           </h1>
           <p className="hero-sub">
             Шесть лет пишу десктопные интерфейсы на C++ и Qt — и до сих пор не устал. Сейчас делаю системные утилиты для отечественной ОС, а часть рабочего времени коммичу в KDE. Да, опенсорс прямо на работе — мне самому до сих пор немного не верится.
@@ -156,8 +153,7 @@ function AboutSection() {
   return (
     <section className="section narrative" id="about">
       <div className="section-rail">
-        <span className="rail-num">01</span>
-        <span className="rail-label">обо мне</span>
+        <span className="rail-label">// обо мне</span>
       </div>
       <div className="narrative-body">
         <h2 className="sec-h">
@@ -209,12 +205,11 @@ function ExperienceSection() {
   return (
     <section className="section" id="experience">
       <div className="section-rail">
-        <span className="rail-num">02</span>
-        <span className="rail-label">опыт работы</span>
+        <span className="rail-label">// опыт работы</span>
       </div>
       <div className="narrative-body">
         <h2 className="sec-h">
-          Три компании. <span className="ac">Шесть с лишним лет.</span> Один любимый стек.
+          Шесть с лишним лет в трёх компаниях — и <span className="ac">один любимый стек</span>.
         </h2>
         <div className="timeline">
           {JOBS.map((j, i) => (
@@ -232,10 +227,7 @@ function ExperienceSection() {
                       {j.note && <span className="job-note">· {j.note}</span>}
                     </div>
                   </div>
-                  <div className="job-period">
-                    {j.current && <span className="ping" />}
-                    {j.period}
-                  </div>
+                  <div className="job-period">{j.period}</div>
                 </div>
                 <p className="job-text">{j.text}</p>
                 <ul className="job-bullets">
@@ -268,8 +260,7 @@ function ProjectsSection() {
   return (
     <section className="section" id="projects">
       <div className="section-rail">
-        <span className="rail-num">03</span>
-        <span className="rail-label">open source</span>
+        <span className="rail-label">// open source</span>
       </div>
       <div className="narrative-body">
         <h2 className="sec-h">
@@ -308,8 +299,7 @@ function StackSection() {
   return (
     <section className="section" id="stack">
       <div className="section-rail">
-        <span className="rail-num">04</span>
-        <span className="rail-label">стек</span>
+        <span className="rail-label">// стек</span>
       </div>
       <div className="narrative-body">
         <h2 className="sec-h">Мой набор <span className="ac">инструментов</span>.</h2>
@@ -406,8 +396,7 @@ function HobbySection({ lasagnaArt = 'layered' }) {
   return (
     <section className="section hobby" id="hobby">
       <div className="section-rail">
-        <span className="rail-num">05</span>
-        <span className="rail-label">вне кода</span>
+        <span className="rail-label">// вне кода</span>
       </div>
       <div className="narrative-body">
         <h2 className="sec-h">
@@ -420,7 +409,7 @@ function HobbySection({ lasagnaArt = 'layered' }) {
               <div className="cat-art">🐈</div>
             </div>
             <div className="hobby-text">
-              <div className="hobby-tag mono">01 / кот</div>
+              <div className="hobby-tag mono">кот</div>
               <h3>Лео.</h3>
               <p>
                 Это мой кот. Переезжал со мной в Питер и стойко перенёс это испытание — теперь мы оба здесь как дома. Лео считает, что мой стол в первую очередь его рабочее место, и я с ним не спорю.
@@ -436,7 +425,7 @@ function HobbySection({ lasagnaArt = 'layered' }) {
               <LasagnaArt variant={lasagnaArt} />
             </div>
             <div className="hobby-text">
-              <div className="hobby-tag mono">02 / готовка</div>
+              <div className="hobby-tag mono">готовка</div>
               <h3>Лазанья — моё фирменное.</h3>
               <p>
                 Готовка меня успокаивает. Могу часами что-то делать на кухне и не уставать — наоборот, разгружается голова, и в конце ещё и есть что съесть. Моё фирменное блюдо — лазанья, и она у меня получается <em>превосходно</em>.
@@ -456,7 +445,7 @@ function HobbySection({ lasagnaArt = 'layered' }) {
               </div>
             </div>
             <div className="hobby-text">
-              <div className="hobby-tag mono">03 / коллекция</div>
+              <div className="hobby-tag mono">коллекция</div>
               <h3>Открытки и фотографии.</h3>
               <p>
                 Я собираю красивые открытки из разных городов и стран — какие-то привожу сам, какие-то прошу привезти друзей. Из этого постепенно складывается своя личная карта мира. А недавно я ещё и сам начал снимать на papershoot и иногда печатать фотографии — теперь к чужим городам добавляются мои.
@@ -482,8 +471,7 @@ function ContactsSection() {
   return (
     <section className="section contacts" id="contacts">
       <div className="section-rail">
-        <span className="rail-num">06</span>
-        <span className="rail-label">контакты</span>
+        <span className="rail-label">// контакты</span>
       </div>
       <div className="narrative-body">
         <h2 className="sec-h">
