@@ -1,0 +1,96 @@
+import Section from "./Section";
+import styles from "./Experience.module.css";
+
+interface Job {
+  co: string;
+  role: string;
+  period: string;
+  text: string;
+  bullets: string[];
+  current?: boolean;
+  note?: string;
+}
+
+const JOBS: Job[] = [
+  {
+    co: "Русбитех-Астра",
+    role: "Старший инженер-программист",
+    period: "2023 — сейчас",
+    current: true,
+    text: "Работаю над отечественной операционной системой — её компонентами и системными утилитами. За время в компании я переписал диалог выключения с QtWidgets на QML, с нуля написал утилиту для планирования выключения и перезагрузки, а сейчас занимаюсь приложением для оформления рабочего стола — фоны, цветовые схемы, курсоры и всё, что с этим связано. Это самая объёмная задача из всех: много легаси, много неожиданных побочных эффектов, и каждый день — новый сюрприз. Большая часть моей работы здесь — вклад в KDE. За эти пару лет я успел получить статус developer в проекте, а вместе с ним и право апрувить чужие merge requests.",
+    bullets: [],
+  },
+  {
+    co: "Специальный технологический центр",
+    role: "Инженер-программист 1 категории",
+    period: "апр. 2020 — сент. 2023",
+    note: "повышен с 2 категории",
+    text: "Занимался сопряжением внешних комплексов с внутренней инфраструктурой компании. Разрабатывал GUI-плагины к основному продукту — они помогали операторам работать с внешним оборудованием через привычный интерфейс. Параллельно писал «адаптеры» на бэкенде, чтобы внешние системы могли общаться с нашими ресурсами. Здесь я по-настоящему вырос как разработчик: разобрался в QML вглубь, плотно подружился с C++. А ещё в какой-то момент сам пришёл к начальству и попросил себе подопечного и больше ответственности за проекты — так получил повышение.",
+    bullets: [],
+  },
+  {
+    co: "Концерн «МЕРИДИАН»",
+    role: "Инженер",
+    period: "апр. 2019 — апр. 2020",
+    note: "первый профессиональный опыт",
+    text: "Разрабатывал интерфейсы для наземных станций приёма телеметрической информации с космических аппаратов — тех самых, через которые операторы держат связь с ЦУПом и управляют КА на орбите. Бэкенд присылает параметры устройства, я рисую окно, в котором всё это видно и управляемо. По дороге собрал небольшую систему JS-классов для удобной работы с данными. Здесь же впервые всерьёз познакомился с QML — и понеслось.",
+    bullets: [],
+  },
+];
+
+export default function Experience() {
+  return (
+    <Section
+      id="experience"
+      num="02"
+      label="опыт работы"
+      title={
+        <>
+          Три компании. <span className="ac">Шесть с лишним лет.</span> Один
+          любимый стек.
+        </>
+      }
+    >
+      <div className={styles.timeline}>
+        {JOBS.map((j, i) => (
+          <article className={styles.job} key={i}>
+            <div className={styles.jobSpine}>
+              <div
+                className={`${styles.jobDot}${j.current ? ` ${styles.current}` : ""}`}
+              />
+              {i < JOBS.length - 1 && <div className={styles.jobLine} />}
+            </div>
+            <div className={styles.jobBody}>
+              <div className={styles.jobHead}>
+                <div>
+                  <h3 className={styles.jobCo}>{j.co}</h3>
+                  <div className={styles.jobRole}>
+                    {j.role}
+                    {j.note && (
+                      <span className={styles.jobNote}>· {j.note}</span>
+                    )}
+                  </div>
+                </div>
+                <div className={styles.jobPeriod}>
+                  {j.current && <span className={styles.ping} />}
+                  {j.period}
+                </div>
+              </div>
+              <p className={styles.jobText}>{j.text}</p>
+              {j.bullets.length > 0 && (
+                <ul className={styles.jobBullets}>
+                  {j.bullets.map((b, k) => (
+                    <li key={k}>
+                      <span className={styles.bTick}>▸</span>
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </Section>
+  );
+}

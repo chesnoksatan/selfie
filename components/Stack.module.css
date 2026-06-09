@@ -1,0 +1,46 @@
+.stackGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  margin-top: 16px;
+}
+@media (max-width: 800px) {
+  .stackGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+.stackCol {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.stackTitle {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--fg-3);
+  padding-bottom: 8px;
+  border-bottom: 0.5px solid var(--line);
+}
+.stackItems {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 8px;
+  column-gap: 6px;
+}
+.chip {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  padding: 5px 10px;
+  background: var(--bg-2);
+  border: 0.5px solid var(--line-2);
+  border-radius: var(--radius-sm);
+  color: var(--fg);
+  white-space: nowrap;
+  transition: border-color 0.2s, color 0.2s;
+}
+.chip:hover {
+  border-color: var(--ac);
+  color: var(--ac);
+}

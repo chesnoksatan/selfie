@@ -21,41 +21,42 @@ When making UI/UX decisions, think like a designer too: visual hierarchy, spacin
 **Content priorities:** professional experience and personality in equal measure. The hobby section (lasagna, postcards) is an intentional choice and will grow over time.
 
 **Visual decisions:**
-- Dark theme is the current default. A theme toggle is planned for the future.
+- Dark theme is the current default. A theme toggle is planned; the light theme CSS already exists in `globals.css` under `[data-theme="light"]` and must not regress.
 - Accent color (`--ac`) is currently KDE blue, but it's not sacred — change it when the task calls for it.
 - When adding new elements, keep the balance: technical but not cold.
 
-**Planned but not yet built:** theme switcher (dark/light), language switcher (RU/EN). Do not implement these without an explicit request.
+**Planned but not yet built:** theme switcher (dark/light), language switcher (RU/EN), blog on MDX. Do not implement these without an explicit request. Landing points when the time comes: theme — toggle + `data-theme` + localStorage no-flash script; i18n — `app/[locale]/` + next-intl in static mode (prefix URLs, no middleware); blog — `app/blog/` + MDX files in the repo, `generateStaticParams`.
 
-## Running the project
+## Stack and commands
 
-Serve the project with a local HTTP server — opening `index.html` via `file://` won't work because Babel Standalone loads `.jsx` files via `fetch()`, which browsers block on the `file://` protocol.
+Next.js (App Router) + TypeScript + CSS Modules. Static export — no Node server in production.
 
 ```
-python3 -m http.server 8000
+npm install        # once
+npm run dev        # http://localhost:3000
+npm run build      # static export into out/
+npm run lint       # eslint
+npx tsc --noEmit   # type check
 ```
 
-Then open `http://localhost:8000`. Changes to `.jsx` files take effect on reload.
+## Deployment
+
+`npm run build` produces a fully static site in `out/`, served by nginx on the owner's VPS. Docker packaging is planned later. `trailingSlash: true` keeps future pages as `dir/index.html`, which nginx serves natively.
 
 ## Architecture
 
-Three files, no dependencies to install:
-
-- **`index.html`** — entry point. Loads React 18 + Babel from unpkg CDN with SRI hashes, then loads `tweaks-panel.jsx` and `sections.jsx` as `type="text/babel"` scripts. Contains the `App` component, `TWEAK_DEFAULTS`, and the `ReactDOM.createRoot` call.
-- **`sections.jsx`** — all page sections (Hero, About, Experience, Projects, Stack, Hobby, Contacts, Footer) plus the `useReveal` scroll-animation hook. Exports everything to `window` via `Object.assign(window, …)` so the inline script in `index.html` can reference them.
-- **`tweaks-panel.jsx`** — self-contained "Tweaks" floating panel with form controls (`TweakSlider`, `TweakToggle`, `TweakRadio`, `TweakSelect`, `TweakText`, `TweakNumber`, `TweakColor`, `TweakButton`). Exports `useTweaks` hook and all components to `window`.
-- **`styles.css`** — all styles. Theming is entirely via CSS custom properties (`--bg`, `--fg`, `--ac`, `--radius`, `--pad`, `--gap`) driven by `data-*` attributes set on `<html>`: `data-theme`, `data-font`, `data-density`, `data-radius`, `data-anim`.
+- **`app/layout.tsx`** — `<html lang="ru" data-theme="dark">`, fonts via `next/font/google` (Inter + JetBrains Mono exposed as `--font-inter` / `--font-jetbrains-mono`), page metadata.
+- **`app/page.tsx`** — composition of all sections in order; the only route.
+- **`app/globals.css`** — design tokens in `:root` (`--bg`, `--fg`, `--ac`, `--radius`, `--pad`, `--gap`, `--mono`, `--sans`), the `[data-theme="light"]` token overrides, base element styles, text utilities (`.mono`, `.dim`, `.ac`, `.small`), reveal-on-scroll styles (`[data-reveal]` / `.in`), and the code-highlight classes (`.kw`, `.ty`, `.cs`, `.cm`, `.nm`) that arrive via generated HTML in Hero.
+- **`components/*.tsx` + `*.module.css`** — one section per file: WipBanner, Hero, About, Experience, Projects, Stack, Hobby, Contacts, Footer. Content data (jobs, KDE contributions, contacts) lives as typed arrays inside the section components.
+- **`components/Section.tsx`** — shared wrapper for numbered sections: rail (number + label), heading, body column.
+- **`components/ScrollReveal.tsx`** — client component without UI; IntersectionObserver adds `.in` to every `[data-reveal]` element.
+- **`content.md`** — reference copy of all site texts.
 
 ## Key patterns
 
-**Tweaks state flow:** `TWEAK_DEFAULTS` in `index.html` (wrapped in `/*EDITMODE-BEGIN*/…/*EDITMODE-END*/` markers) is the single source of truth. `useTweaks(defaults)` manages state in React; every `setTweak` call also posts `{ type: '__edit_mode_set_keys', edits }` to `window.parent` so a host frame can rewrite the `EDITMODE` block on disk.
-
-**TweaksPanel postMessage protocol:** the panel listens for `__activate_edit_mode` / `__deactivate_edit_mode` from the parent frame and posts `__edit_mode_available` on mount and `__edit_mode_dismissed` on close. This lets the panel be driven by an external prototype tool without any direct coupling.
-
-**Theme application:** `App` reads all tweak values and applies them in a `useEffect` via `document.documentElement.setAttribute(…)` and `style.setProperty('--ac', …)`. Add new theme axes the same way — add a CSS `data-*` selector block in `styles.css` and wire the attribute in `App`'s effect.
-
-**Accent color soft variant:** `--ac-soft` is set inline as `color-mix(in oklab, <accent> 15%, transparent)` because the CSS variable can't self-reference.
-
-## Contacts section
-
-The contact links in `ContactsSection` in `sections.jsx` still contain placeholder values (`hello@example.com`, `@your_username`, etc.). Replace them with real links before publishing.
+- **Server components by default.** Only `Hero` (typing animation) and `ScrollReveal` (IntersectionObserver) are `"use client"`.
+- **Theming** is CSS custom properties driven by the `data-theme` attribute on `<html>`. Add new theme axes the same way: a `data-*` selector block in `globals.css` plus the attribute in `layout.tsx`.
+- **Global vs module classes:** text utilities and code-highlight classes are global (they cross component boundaries or arrive via `dangerouslySetInnerHTML`); everything else is CSS Modules. Theme-specific component overrides use `:global([data-theme="light"]) .className` inside modules.
+- **Animations respect `prefers-reduced-motion`**: every CSS animation/transition has a `@media (prefers-reduced-motion: reduce)` override, and Hero/ScrollReveal check `matchMedia` in JS. Keep this invariant for any new animation.
+- **Anchor navigation** uses plain `<a href="#…">` links with `html { scroll-behavior: smooth; }` — no JS scrolling.
