@@ -10,8 +10,14 @@
 @media (max-width: 800px) {
   .section {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 8px;
     padding: 64px 24px;
+  }
+  .rail {
+    position: static;
+    top: auto;
+    padding-top: 0;
+    flex-direction: row;
   }
 }
 @media (max-width: 480px) {
