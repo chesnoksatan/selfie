@@ -6,7 +6,7 @@
 }
 .hobbyCard {
   display: grid;
-  grid-template-columns: 220px 1fr;
+  grid-template-columns: 260px 1fr;
   gap: 28px;
   align-items: center;
   background: var(--bg-2);
@@ -167,12 +167,12 @@
 /* Открытки */
 .cardsStack {
   position: relative;
-  width: 180px;
-  height: 130px;
+  width: 200px;
+  height: 140px;
 }
 .postcard {
   position: absolute;
-  width: 130px;
+  width: 140px;
   height: 90px;
   background: #f7f2e3;
   color: #2b2620;
@@ -204,14 +204,14 @@
   transform: rotate(-8deg);
 }
 .p2 {
-  top: 14px;
-  left: 24px;
+  top: 16px;
+  left: 32px;
   transform: rotate(3deg);
   background: #efe6cf;
 }
 .p3 {
-  top: 28px;
-  left: 50px;
+  top: 32px;
+  left: 72px;
   transform: rotate(-2deg);
   background: #e8dfc4;
 }
