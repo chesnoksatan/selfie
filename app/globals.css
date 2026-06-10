@@ -1,0 +1,134 @@
+/* ─── Глобальные стили: токены, база, утилиты ─── */
+
+:root {
+  --bg: #0d0e10;
+  --bg-2: #131418;
+  --bg-3: #1a1c21;
+  --fg: #ebe8df;
+  --fg-2: #b6b2a6;
+  --fg-3: #6e6a5e;
+  --line: rgba(235, 232, 223, 0.08);
+  --line-2: rgba(235, 232, 223, 0.14);
+  --ac: #6aa9ff;
+  --ac-soft: color-mix(in oklab, var(--ac) 15%, transparent);
+  --radius: 14px;
+  --radius-sm: 8px;
+  --gap: 36px;
+  --pad: 144px;
+  --maxw: 1180px;
+  --innerw: 760px;
+  --mono: var(--font-jetbrains-mono), "IBM Plex Mono", "Menlo", ui-monospace,
+    monospace;
+  --sans: var(--font-inter), "Geist", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Светлая тема: задел под будущий переключатель */
+[data-theme="light"] {
+  --bg: #f7f5ef;
+  --bg-2: #efece4;
+  --bg-3: #e6e2d6;
+  --fg: #1c1b18;
+  --fg-2: #4f4d44;
+  --fg-3: #8a877b;
+  --line: rgba(28, 27, 24, 0.1);
+  --line-2: rgba(28, 27, 24, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "ss01", "cv11";
+}
+::selection {
+  background: var(--ac);
+  color: #0d0e10;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+em {
+  font-style: italic;
+  color: var(--fg);
+}
+
+.mono {
+  font-family: var(--mono);
+  font-feature-settings: "ss02";
+  letter-spacing: -0.01em;
+}
+.dim {
+  color: var(--fg-2);
+}
+.ac {
+  color: var(--ac);
+}
+.small {
+  font-size: 14px;
+}
+
+/* Reveal-on-scroll: класс .in навешивает ScrollReveal */
+[data-reveal] {
+  opacity: 0;
+  transition: opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+[data-reveal].in {
+  opacity: 1;
+}
+
+/* Подсветка кода в Hero: классы приходят из сгенерированного HTML,
+   поэтому живут глобально, а не в CSS-модуле */
+.kw {
+  color: #c792ea;
+}
+.ty {
+  color: #82aaff;
+}
+.cs {
+  color: #c3e88d;
+}
+.cm {
+  color: var(--fg-3);
+  font-style: italic;
+}
+.nm {
+  color: #f78c6c;
+}
+[data-theme="light"] .kw {
+  color: #883a96;
+}
+[data-theme="light"] .ty {
+  color: #2962a8;
+}
+[data-theme="light"] .cs {
+  color: #4a7c2a;
+}
+[data-theme="light"] .nm {
+  color: #b35420;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  [data-reveal] {
+    opacity: 1 !important;
+    transition: none !important;
+  }
+}

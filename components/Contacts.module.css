@@ -1,0 +1,91 @@
+.contactList {
+  display: flex;
+  flex-direction: column;
+  margin-top: 24px;
+  border-top: 0.5px solid var(--line);
+}
+.contactRow {
+  display: grid;
+  grid-template-columns: 100px 1fr 24px;
+  gap: 24px;
+  align-items: center;
+  padding: 18px 0;
+  border-bottom: 0.5px solid var(--line);
+  transition: padding 0.25s, color 0.25s;
+  position: relative;
+}
+.contactRow:hover {
+  padding-left: 14px;
+  color: var(--ac);
+}
+.contactRow::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--ac);
+  transform: scaleY(0);
+  transition: transform 0.25s;
+}
+.contactRow:hover::before {
+  transform: scaleY(0.6);
+}
+.contactLabel {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--fg-3);
+}
+.contactValue {
+  font-family: var(--mono);
+  font-size: 17px;
+  letter-spacing: -0.01em;
+}
+.contactArr {
+  font-family: var(--mono);
+  color: var(--fg-3);
+  text-align: right;
+  transition: transform 0.25s, color 0.25s;
+}
+.contactRow:hover .contactArr {
+  transform: translateX(4px);
+  color: var(--ac);
+}
+@media (max-width: 600px) {
+  .contactRow {
+    grid-template-columns: 1fr 24px;
+    grid-template-rows: auto auto;
+    row-gap: 2px;
+    column-gap: 12px;
+  }
+  .contactLabel {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .contactValue {
+    grid-column: 1;
+    grid-row: 2;
+    font-size: 15px;
+    word-break: break-all;
+  }
+  .contactArr {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    align-self: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contactRow,
+  .contactArr {
+    transition: none;
+  }
+  .contactRow:hover {
+    padding-left: 0;
+  }
+  .contactRow::before {
+    transition: none;
+  }
+}
