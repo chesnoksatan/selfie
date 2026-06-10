@@ -28,7 +28,10 @@ ApplicationWindow {
 // Очень простая подсветка QML. Классы .cm/.cs/.kw/.ty/.nm — глобальные
 // (globals.css), потому что попадают в разметку строкой.
 // Строки-комментарии подсвечиваются целиком, иначе регэксп строк
-// ломает span комментария
+// ломает span комментария.
+// Регэкспы применяются последовательно и рассчитаны на текущий fullCode:
+// цифра или ключевое слово внутри строкового литерала ("Qt 6") подсветится
+// неправильно. Меняешь fullCode — проверь подсветку глазами.
 function highlightLine(line: string): string {
   const esc = line
     .replace(/&/g, "&amp;")
@@ -60,6 +63,9 @@ export default function Hero() {
     let i = 0;
     const id = setInterval(() => {
       i += step;
+      // Не режем суррогатную пару (эмодзи 👋) — иначе на кадр мелькнёт «�»
+      const code = fullCode.charCodeAt(i);
+      if (code >= 0xdc00 && code <= 0xdfff) i += 1;
       if (i >= fullCode.length) {
         setTyped(fullCode);
         clearInterval(id);
@@ -88,19 +94,20 @@ export default function Hero() {
               Связаться со мной
               <span className={styles.arr}>→</span>
             </a>
-            <a className={`${styles.btn} ${styles.btnGhost}`} href="#experience">
+            <a className={`${styles.btn} ${styles.btnGhost}`} href="#projects">
               Посмотреть проекты
             </a>
           </div>
         </div>
 
-        <div className={styles.ideWrap}>
+        {/* Декорация: роль, город и стаж продублированы текстом страницы */}
+        <div className={styles.ideWrap} aria-hidden>
           <div className={styles.ide}>
             <div className={styles.ideBar}>
               <div className={styles.ideDots}>
-                <i style={{ background: "#ff5f57" }} />
-                <i style={{ background: "#febc2e" }} />
-                <i style={{ background: "#28c840" }} />
+                <i />
+                <i />
+                <i />
               </div>
               <div className={styles.ideTabs}>
                 <div className={`${styles.tab} ${styles.active}`}>

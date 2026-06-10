@@ -142,9 +142,10 @@
   left: 50%;
   width: 36px;
   height: 36px;
+  /* Цвет от --fg, чтобы пар был виден и в светлой теме */
   background: radial-gradient(
     circle at 50% 70%,
-    rgba(255, 255, 255, 0.4),
+    color-mix(in oklab, var(--fg) 40%, transparent),
     transparent 60%
   );
   filter: blur(5px);

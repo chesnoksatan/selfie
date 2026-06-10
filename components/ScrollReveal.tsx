@@ -14,7 +14,10 @@ export default function ScrollReveal() {
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((en) => {
-          if (en.isIntersecting) en.target.classList.add("in");
+          if (en.isIntersecting) {
+            en.target.classList.add("in");
+            io.unobserve(en.target);
+          }
         });
       },
       { threshold: 0.08, rootMargin: "0px 0px -10% 0px" },
