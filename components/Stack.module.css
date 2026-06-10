@@ -38,9 +38,4 @@
   border-radius: var(--radius-sm);
   color: var(--fg);
   white-space: nowrap;
-  transition: border-color 0.2s, color 0.2s;
-}
-.chip:hover {
-  border-color: var(--ac);
-  color: var(--ac);
 }

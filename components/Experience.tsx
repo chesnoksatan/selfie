@@ -42,12 +42,11 @@ export default function Experience() {
   return (
     <Section
       id="experience"
-      num="02"
       label="опыт работы"
       title={
         <>
-          Три компании. <span className="ac">Шесть с лишним лет.</span> Один
-          любимый стек.
+          Шесть с лишним лет в трёх компаниях — и{" "}
+          <span className="ac">один любимый стек</span>.
         </>
       }
     >
@@ -71,10 +70,7 @@ export default function Experience() {
                     )}
                   </div>
                 </div>
-                <div className={styles.jobPeriod}>
-                  {j.current && <span className={styles.ping} />}
-                  {j.period}
-                </div>
+                <div className={styles.jobPeriod}>{j.period}</div>
               </div>
               <p className={styles.jobText}>{j.text}</p>
               {j.bullets.length > 0 && (

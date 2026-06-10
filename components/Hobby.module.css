@@ -13,11 +13,6 @@
   border: 0.5px solid var(--line-2);
   border-radius: var(--radius);
   padding: 24px;
-  transition: transform 0.3s, border-color 0.3s;
-}
-.hobbyCard:hover {
-  transform: translateY(-2px);
-  border-color: var(--fg-3);
 }
 @media (max-width: 720px) {
   .hobbyCard {
@@ -188,7 +183,6 @@
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
   display: flex;
   align-items: flex-end;
-  transition: transform 0.35s;
 }
 .stamp {
   position: absolute;
@@ -220,24 +214,9 @@
   transform: rotate(-2deg);
   background: #e8dfc4;
 }
-.postcards:hover .p1 {
-  transform: rotate(-12deg) translate(-6px, -4px);
-}
-.postcards:hover .p3 {
-  transform: rotate(2deg) translate(8px, 4px);
-}
 
 @media (prefers-reduced-motion: reduce) {
-  .hobbyCard {
-    transition: none;
-  }
-  .hobbyCard:hover {
-    transform: none;
-  }
   .steam {
     animation: none;
-  }
-  .postcard {
-    transition: none;
   }
 }

@@ -28,7 +28,6 @@ export default function Hobby() {
   return (
     <Section
       id="hobby"
-      num="05"
       label="вне кода"
       title={
         <>
@@ -42,7 +41,7 @@ export default function Hobby() {
             <div className={styles.catArt}>🐈</div>
           </div>
           <div className={styles.hobbyText}>
-            <div className={`${styles.hobbyTag} mono`}>01 / кот</div>
+            <div className={`${styles.hobbyTag} mono`}>кот</div>
             <h3>Лео.</h3>
             <p>
               Это мой кот. Переезжал со мной в Питер и стойко перенёс это
@@ -60,7 +59,7 @@ export default function Hobby() {
             <LasagnaArt />
           </div>
           <div className={styles.hobbyText}>
-            <div className={`${styles.hobbyTag} mono`}>02 / готовка</div>
+            <div className={`${styles.hobbyTag} mono`}>готовка</div>
             <h3>Лазанья — моё фирменное.</h3>
             <p>
               Готовка меня успокаивает. Могу часами что-то делать на кухне и не
@@ -74,7 +73,7 @@ export default function Hobby() {
           </div>
         </article>
 
-        <article className={`${styles.hobbyCard} ${styles.postcards}`}>
+        <article className={styles.hobbyCard}>
           <div className={styles.hobbyArt} aria-hidden>
             <div className={styles.cardsStack}>
               <div className={`${styles.postcard} ${styles.p1}`}>
@@ -92,7 +91,7 @@ export default function Hobby() {
             </div>
           </div>
           <div className={styles.hobbyText}>
-            <div className={`${styles.hobbyTag} mono`}>03 / коллекция</div>
+            <div className={`${styles.hobbyTag} mono`}>коллекция</div>
             <h3>Открытки и фотографии.</h3>
             <p>
               Я собираю красивые открытки из разных городов и стран — какие-то

@@ -63,7 +63,6 @@ export default function Projects() {
   return (
     <Section
       id="projects"
-      num="03"
       label="open source"
       title={
         <>

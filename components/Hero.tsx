@@ -27,21 +27,26 @@ ApplicationWindow {
 
 // Очень простая подсветка QML. Классы .cm/.cs/.kw/.ty/.nm — глобальные
 // (globals.css), потому что попадают в разметку строкой.
-// Строковый паттерн идёт раньше комментариев, иначе он ловит "cm"
-// внутри уже вставленного span
+// Строки-комментарии подсвечиваются целиком, иначе регэксп строк
+// ломает span комментария
 function highlightLine(line: string): string {
-  return line
+  const esc = line
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/("[^"]*")/g, '<span class="cs">$1</span>')
-    .replace(/(\/\/.*$)/g, '<span class="cm">$1</span>')
-    .replace(
-      /\b(import|readonly|property|var|int|string|Component|onCompleted)\b/g,
-      '<span class="kw">$1</span>',
-    )
-    .replace(/\b(ApplicationWindow|console)\b/g, '<span class="ty">$1</span>')
-    .replace(/\b(\d+)\b/g, '<span class="nm">$1</span>');
+    .replace(/>/g, "&gt;");
+  return /^\s*\/\//.test(esc)
+    ? `<span class="cm">${esc}</span>`
+    : esc
+        .replace(/("[^"]*")/g, '<span class="cs">$1</span>')
+        .replace(
+          /\b(import|readonly|property|var|int|string|Component|onCompleted)\b/g,
+          '<span class="kw">$1</span>',
+        )
+        .replace(
+          /\b(ApplicationWindow|console)\b/g,
+          '<span class="ty">$1</span>',
+        )
+        .replace(/\b(\d+)\b/g, '<span class="nm">$1</span>');
 }
 
 export default function Hero() {
@@ -69,15 +74,8 @@ export default function Hero() {
     <section className={styles.hero} id="top" data-reveal>
       <div className={styles.heroGrid}>
         <div>
-          <div className={styles.eyebrow}>
-            <span className={styles.eyebrowDot} />
-            <span>сейчас в Санкт-Петербурге · можно написать</span>
-          </div>
           <h1 className={styles.heroTitle}>
             Привет, я <span className="ac">Евгений</span>
-            <span className={styles.wave} aria-hidden>
-              👋
-            </span>
           </h1>
           <p className={styles.heroSub}>
             Шесть лет пишу десктопные интерфейсы на C++ и Qt — и до сих пор не

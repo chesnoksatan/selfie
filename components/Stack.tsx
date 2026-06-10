@@ -21,7 +21,6 @@ export default function Stack() {
   return (
     <Section
       id="stack"
-      num="04"
       label="стек"
       title={
         <>

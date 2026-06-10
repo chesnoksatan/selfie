@@ -4,7 +4,6 @@ export default function About() {
   return (
     <Section
       id="about"
-      num="01"
       label="обо мне"
       title={
         <>

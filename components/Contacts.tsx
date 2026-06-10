@@ -23,7 +23,6 @@ export default function Contacts() {
   return (
     <Section
       id="contacts"
-      num="06"
       label="контакты"
       title={
         <>
