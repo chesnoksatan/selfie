@@ -10,6 +10,8 @@
   --line: rgba(235, 232, 223, 0.08);
   --line-2: rgba(235, 232, 223, 0.14);
   --ac: #6aa9ff;
+  /* Цвет текста поверх акцентного фона — менять в паре с --ac */
+  --on-ac: #0d0e10;
   --ac-soft: color-mix(in oklab, var(--ac) 15%, transparent);
   --radius: 14px;
   --radius-sm: 8px;
@@ -56,7 +58,7 @@ body {
 }
 ::selection {
   background: var(--ac);
-  color: #0d0e10;
+  color: var(--on-ac);
 }
 
 a {

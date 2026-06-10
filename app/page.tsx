@@ -14,13 +14,15 @@ export default function Home() {
     <>
       <ScrollReveal />
       <WipBanner />
-      <Hero />
-      <About />
-      <Experience />
-      <Projects />
-      <Stack />
-      <Hobby />
-      <Contacts />
+      <main>
+        <Hero />
+        <About />
+        <Experience />
+        <Projects />
+        <Stack />
+        <Hobby />
+        <Contacts />
+      </main>
       <Footer />
     </>
   );

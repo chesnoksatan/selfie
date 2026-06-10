@@ -83,22 +83,3 @@
   margin: 0 0 14px;
   text-wrap: pretty;
 }
-.jobBullets {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.jobBullets li {
-  display: flex;
-  gap: 10px;
-  font-size: 14.5px;
-  color: var(--fg-2);
-}
-.bTick {
-  color: var(--ac);
-  flex-shrink: 0;
-  font-family: var(--mono);
-}

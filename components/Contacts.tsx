@@ -41,8 +41,10 @@ export default function Contacts() {
             className={styles.contactRow}
             href={c.href}
             key={i}
-            target="_blank"
-            rel="noreferrer"
+            {...(c.href.startsWith("http") && {
+              target: "_blank",
+              rel: "noopener noreferrer",
+            })}
           >
             <span className={`${styles.contactLabel} mono`}>{c.label}</span>
             <span className={styles.contactValue}>{c.value}</span>
