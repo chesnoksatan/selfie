@@ -57,8 +57,8 @@ body {
   font-feature-settings: "ss01", "cv11";
 }
 ::selection {
-  background: var(--ac);
-  color: var(--on-ac);
+  background: color-mix(in oklab, var(--ac) 32%, transparent);
+  color: var(--fg);
 }
 
 a {
